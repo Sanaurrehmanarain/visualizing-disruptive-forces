@@ -1,0 +1,10 @@
+Country (Node),Network Role,Out-Degree (Lending Ties),In-Degree (Borrowing Ties),Total Degree,Betweenness Centrality,Total Outward Claims ($M),Total Inward Obligations ($M)
+France,Core Hub / Bridge,186,21,207,0.015,2498736.0,1186795.0
+United Kingdom,Core Hub / Bridge,183,22,205,0.017,2089045.0,2922383.0
+Belgium,Core Hub / Bridge,162,19,181,0.0092,1022563.0,230062.0
+Spain,Core Hub / Bridge,154,21,175,0.0087,471658.0,717057.0
+Chinese Taipei,Regional Hub,130,12,142,0.0042,165207.0,30801.0
+Italy,Bridge / Intermediary,124,20,144,0.005,749874.0,756949.0
+Micronesia,Peripheral Node,0,1,1,0.0,0.0,1.0
+Rwanda,Peripheral Node,0,1,1,0.0,0.0,5.0
+Greenland,Peripheral Node,0,1,1,0.0,0.0,23.0
