@@ -20,14 +20,23 @@
 
 ## 📋 Table of Contents
 
-- [Introduction](#-introduction)
-- [Data Source](#-data-source)
-- [Repository Structure](#-repository-structure)
-- [Results & Visualizations](#-results--visualizations)
-- [Conclusion & Policy Recommendation](#-conclusion--policy-recommendation)
-- [Reproducing the Analysis](#-reproducing-the-analysis)
-- [Citation](#-citation)
-- [License](#-license)
+- [Visualizing Disruptive Forces in the Global Banking Network](#visualizing-disruptive-forces-in-the-global-banking-network)
+    - [A Multi-Lens Analysis of the 2008 Financial Crisis](#a-multi-lens-analysis-of-the-2008-financial-crisis)
+  - [📋 Table of Contents](#-table-of-contents)
+  - [🌍 Introduction](#-introduction)
+  - [📊 Data Source](#-data-source)
+  - [🗂️ Repository Structure](#️-repository-structure)
+  - [📈 Results \& Visualizations](#-results--visualizations)
+    - [1. Network Topology — Structural Core \& Hubs](#1-network-topology--structural-core--hubs)
+    - [2. Nonlinear \& Asymmetric Risk](#2-nonlinear--asymmetric-risk)
+    - [3. Strategic Coordination Failure — The Bank Run](#3-strategic-coordination-failure--the-bank-run)
+    - [4. Integration — The Triple-Point Overlay](#4-integration--the-triple-point-overlay)
+  - [🖥️ Interactive Shiny Dashboard](#️-interactive-shiny-dashboard)
+  - [🏛️ Conclusion \& Policy Recommendation](#️-conclusion--policy-recommendation)
+  - [🔁 Reproducing the Analysis](#-reproducing-the-analysis)
+  - [🚀 Running the Shiny App](#-running-the-shiny-app)
+  - [📖 Citation](#-citation)
+  - [📜 License](#-license)
 
 ---
 
@@ -76,8 +85,9 @@ visualizing-disruptive-forces/
 ├── data/
 │   ├── raw/            # BIS bulk download + dashboard exports
 │   └── processed/       # cleaned, positive-edge network (2007–2010)
-├── figures/             # all exported chart/diagram PNGs
+├── figures/             # all exported chart/diagram PNGs + app screenshots (app1–3.png)
 ├── tables/               # exported CSV tables (e.g. table_a1_node_metrics.csv)
+├── app.py                # interactive Shiny for Python dashboard
 ├── ProjectReport.docx / .pdf
 ├── banner.svg
 ├── CITATION.cff
@@ -135,6 +145,25 @@ This is not a banking-specific quirk — the same hub/cascade/hoarding pattern r
 
 ---
 
+## 🖥️ Interactive Shiny Dashboard
+
+Beyond the static notebooks, the project ships a **Shiny for Python** app (`app.py`) that lets you explore all three analytical lenses interactively — filter by quarter, adjust the number of hubs shown, pick a target country for the bank-run comparison, and download filtered data as CSV.
+
+**Tab 1 — Network Cartography** (KPIs, top-lender bar chart, and an interactive Plotly exposure network):
+
+![Network Cartography Tab](figures/app1.png)
+
+**Tabs 2 & 3 — Causal Dynamics and Strategic Behavior**, shown side by side:
+
+<p align="center">
+  <img src="figures/app2.png" width="48%">
+  <img src="figures/app3.png" width="48%">
+</p>
+
+See [Running the Shiny App](#-running-the-shiny-app) below to launch it locally.
+
+---
+
 ## 🏛️ Conclusion & Policy Recommendation
 
 A holistic assessment reveals a sharp trade-off: structural "circuit breakers" (capital freezes) can themselves *trigger* the behavioral panic they're meant to prevent.
@@ -155,6 +184,46 @@ jupyter notebook
 ```
 
 Run the notebooks in order (`00` → `05`); each stage writes its outputs to `data/processed/`, `figures/`, and `tables/` for the next stage to consume.
+
+---
+
+## 🚀 Running the Shiny App
+
+The interactive dashboard (`app.py`) is built with **[Shiny for Python](https://shiny.posit.co/py/)**, `shinywidgets` (for the embedded Plotly network graph), `pandas`, `networkx`, `matplotlib`/`seaborn`, and `plotly`.
+
+**1. Install dependencies**
+
+```bash
+pip install shiny shinywidgets pandas numpy matplotlib seaborn networkx plotly
+```
+
+*(or simply `pip install -r requirements.txt` if you've already cloned the repo — see [Reproducing the Analysis](#-reproducing-the-analysis))*
+
+**2. Make sure the processed data is in place**
+
+The app looks for the network CSV at either of these paths (relative to wherever you launch it from):
+
+```
+data/processed/bis_cbs_network_2007_2010_positive_edges.csv
+../data/processed/bis_cbs_network_2007_2010_positive_edges.csv
+```
+
+If this file doesn't exist yet, run notebook `00_data_preprocessing.ipynb` first — the app will still launch without it, but will show a data-warning banner and empty panels.
+
+**3. Launch the app**
+
+```bash
+shiny run app.py
+```
+
+By default this serves the dashboard at **http://127.0.0.1:8000**. Useful flags:
+
+```bash
+shiny run app.py --reload          # auto-reload on code changes (dev mode)
+shiny run app.py --host 0.0.0.0 --port 8080   # expose on a custom host/port
+```
+
+Then open the printed URL in your browser. You'll land on **1. Network Cartography**, with **2. Causal Dynamics** and **3. Strategic Behavior** available as additional tabs at the top.
 
 ---
 
